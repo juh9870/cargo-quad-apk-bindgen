@@ -51,6 +51,10 @@ pub fn build_shared_libraries(
         std::env::set_var("CXX", util::find_clang_cpp(config, build_target)?);
         std::env::set_var("AR", util::find_ar(config, build_target)?);
 
+        // Set environment variables needed for bindgen to work
+        std::env::set_var("CLANG_PATH", util::find_clang(config, build_target)?);
+        std::env::set_var("LIBCLANG_PATH", util::llvm_toolchain_root(config).join("lib64"));
+
         // Use libc++. It is current default C++ runtime
         std::env::set_var("CXXSTDLIB", "c++");
 
